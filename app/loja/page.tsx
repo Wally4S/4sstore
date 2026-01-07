@@ -1,5 +1,10 @@
 "use client";
 
+/**
+ * 🔴 MUITO IMPORTANTE
+ * Esta linha impede o Next/Vercel de tentar prerenderizar a página
+ * que usa useSearchParams()
+ */
 export const dynamic = "force-dynamic";
 
 import { useSearchParams, useRouter } from "next/navigation";
@@ -87,7 +92,7 @@ export default function LojaPage() {
     },
     {
       nome: "Cachecol dos Corajosos",
-      categoria: "baixo",
+      categoria: "baixo", // 🔧 corrigido (antes estava "Baixo")
       descricao: {
         visual: "✔️",
         equipeEm: "Baixo",
