@@ -1,40 +1,31 @@
-"use client";
+import { produtos, Produto } from "../../../data/produtos/produtos";
 
-import React from "react";
-import { produtos, Produto } from "../data/produtos/produtos";
-import Link from "next/link";
+interface Props {
+  params: {
+    categoria: string;
+  };
+}
 
-export default function LojaClient() {
-  // Pega todas as categorias únicas
-  const categorias = Array.from(new Set(produtos.map((p) => p.categoria)));
+export default function CategoriaPage({ params }: Props) {
+  const { categoria } = params;
+
+  // Filtra produtos da categoria
+  const produtosFiltrados: Produto[] = produtos.filter(
+    (produto) => produto.categoria === categoria
+  );
+
+  if (produtosFiltrados.length === 0) {
+    return <div style={{ padding: "20px" }}>
+      <h1>Categoria: {categoria}</h1>
+      <p>Nenhum produto encontrado para essa categoria.</p>
+    </div>;
+  }
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Loja</h1>
-
-      {/* Links de categoria */}
-      <div style={{ marginBottom: "20px" }}>
-        {categorias.map((cat) => (
-          <Link
-            key={cat}
-            href={`/loja/categoria/${cat}`}
-            style={{
-              marginRight: "10px",
-              padding: "5px 10px",
-              border: "1px solid #000",
-              borderRadius: "5px",
-              textDecoration: "none",
-              color: "#000",
-            }}
-          >
-            {cat}
-          </Link>
-        ))}
-      </div>
-
-      {/* Produtos */}
+      <h1>Categoria: {categoria}</h1>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {produtos.map((produto: Produto, index) => (
+        {produtosFiltrados.map((produto, index) => (
           <div
             key={index}
             style={{
